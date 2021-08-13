@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+
+  function pvalidate(){
+      var phoneno=/^[6-9]{1}[0-9]{9}$/;
+      var phone=document.myForm.phone.value;
+     if (phone.match(phoneno)){
+     return true;
+     }
+     else{
+     alert('enter only 10 digit and start with 6,7,8,9')
+     return false
+     }
+
+  }
+
+
+
+
+
+
+  function validateForm(){
+
+     var name= document.myForm.name.value;
+     var dobb= document.myForm.dob.value;
+     var email=document.myForm.email.value;
+     var phone=document.myForm.phone.value;
+     var dob = new Date(dobb);
+     var month_diff = Date.now() - dob.getTime();
+     var age_dt = new Date(month_diff);
+     var year = age_dt.getUTCFullYear();
+     var age = Math.abs(year - 1970);
+     var phoneno=/^[6-9]{1}[0-9]{9}$/;
+
+     if (name==""){
+     	alert('name cant be empty')
+     	return false;
+     }
+
+     if (!/^[a-zA-Z]*$/g.test(document.myForm.name.value)) {
+        alert("Invalid characters: please enter only character not digits");
+        document.myForm.name.focus();
+        return false;
+    }
+
+
+
+
+     else if (dobb==""){
+     	alert('cant be empty dob')
+     	return false;
+
+     }else if (email==""){
+     	alert('please enter email.')
+     	return false;
+
+     }else if (phone==""){
+     	alert("mobile can't be empty")
+     	return false;
+
+     }
+
+
+     else if (age<18){
+         alert('invalid age:Your age is under the 18')
+         return false;
+     }
+     else if (phone.match(phoneno)){
+     return true;
+     }
+     else{
+     alert('enter only digits and start with 6,7,8,9')
+     return false
+     }
+
+  }
+
+
+</script>
+
+
+
+
+
+  <title>User Register</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h2>User form</h2>
+  <form name="myForm" onsubmit="return validateForm()" method="post">
+    {% csrf_token %}
+
+    {% if error%}
+    <div class="alert alert-danger" role="alert">
+      {{error}}
+    </div>
+    {% endif %}
+
+
+      <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" class="form-control" id="name1" placeholder="Enter user name-" name="name">
+      </div>
+
+      <div class="form-group">
+      <label for="dob">Date of Birth:</label>
+      <input type="date" class="form-control" id="dob1" placeholder="Enter DOB-" name="dob">
+      </div>
+
+      <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+    </div>
+    <div class="form-group">
+      <label for="phone">Phone Number:</label>
+      <input type="text" class="form-control" id="phone" placeholder="Enter Phone Number" name="phone" maxlength="10"/>
+    </div>
+
+    <button type="submit" class="btn btn-default">Submit</button>
+  </form>
+</div>
+</body>
+</html>
